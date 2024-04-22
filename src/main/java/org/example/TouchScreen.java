@@ -7,7 +7,7 @@ public abstract class TouchScreen extends Device{
     private int memory;
     private final int[] memories = {64, 128, 256, 512};
 
-    public TouchScreen(String trademark, String model, int price, int ram, float diagonal, int battery, float weight) {
+    public TouchScreen(String trademark, String model, float price, int ram, float diagonal, int battery, float weight) {
         super(trademark, model, price, weight);
         this.diagonal = diagonal;
         this.battery = battery;

@@ -6,12 +6,12 @@ import java.util.Scanner;
 public abstract class Device implements ITechnology {
     protected String trademark;
     protected String model;
-    protected int price;
+    protected float price;
     public String color;
     protected float weight;
     private ArrayList<String> colors = new ArrayList<>();
 
-    public Device(String trademark, String model, int price, float weight){
+    public Device(String trademark, String model, float price, float weight){
         this.trademark = trademark;
         this.model = model;
         this.price = price;

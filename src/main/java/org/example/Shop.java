@@ -6,6 +6,23 @@ import java.util.Scanner;
 public class Shop {
     public String name;
     protected ArrayList<Device> devices = new ArrayList<>();
+    protected HashTable table = new HashTable();
+    protected List orders = new List();
+
+    public void addToHashTable(Device device){
+        table.put(device);
+    }
+    public void getSizeOfTable(){
+        System.out.println("size" + table.size);
+    }
+
+    public void findItem(String trademark, String model){
+        table.get(trademark, model);
+    }
+
+    public void removeFromHashTable(Device device){
+        table.remove(device);
+    }
 
     public Shop(String name){
         System.out.println("come as you are, as you are\n");
@@ -85,9 +102,21 @@ public class Shop {
         String address;
         System.out.print("enter your address: ");
         address = scan.nextLine();
-        Order order = new Order(address, gadget.price, gadget.getCashback(), gadget.weight, gadget);
+        Order order = new Order(address, gadget.price, gadget.getCashback(), gadget.weight, gadget, client);
+        orders.push(order);
         client.orders.add(order);
         System.out.println("Your order has been placed\n");
+    }
+
+    public void showOrders(Client client){
+        for(int i = 0; i < client.orders.size(); i++){
+            System.out.println("\nOrder №" + (i+1));
+            client.orders.get(i).showDetails();
+        }
+    }
+
+    public void showOrders(){
+        orders.showList();
     }
 
     public void buy(Client client){
@@ -101,17 +130,11 @@ public class Shop {
             int price = CountTotalPrice(client);
             float cashback = CountCashback(client);
             float weight = CountWeight(client);
-            Order order = new Order(address, price, cashback, weight, client.cart);
+            Order order = new Order(address, price, cashback, weight, client.cart, client);
+            orders.push(order);
             client.orders.add(order);
             System.out.println("Your order has been placed\n");
             client.cart.clear();
-        }
-    }
-
-    public void showOrders(Client client){
-        for(int i = 0; i < client.orders.size(); i++){
-            System.out.println("\nOrder №" + (i+1));
-            client.orders.get(i).showDetails(client);
         }
     }
 
