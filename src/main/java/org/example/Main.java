@@ -52,7 +52,9 @@ public class Main {
         shop.addToShoppingCart(client1, phone2);
         shop.addToShoppingCart(client1, tablet1);
 
-        //shop.showShoppingCart(client1);
+        shop.removeFromCart(client1);
+
+        shop.showShoppingCart(client1);
 
         shop.buy(client1);
 

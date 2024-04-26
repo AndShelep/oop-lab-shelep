@@ -9,13 +9,14 @@ public class Client {
     protected String surname;
     protected String number;
     protected String email;
-    protected List<Device> cart = new ArrayList<>();
+    protected ShoppingCart cart;
     protected ArrayList<Order> orders = new ArrayList<>();
     public Client(String name, String surname, String number, String email){
         this.name = name;
         this.surname = surname;
         this.number = number;
         this.email = email;
+        cart = new ShoppingCart();
     }
 
 }

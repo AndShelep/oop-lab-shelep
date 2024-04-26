@@ -8,6 +8,7 @@ public class Shop {
     protected ArrayList<Device> devices = new ArrayList<>();
     protected HashTable table = new HashTable();
     protected List orders = new List();
+    Scanner scan = new Scanner(System.in);
 
     public void addToHashTable(Device device){
         table.put(device);
@@ -61,21 +62,21 @@ public class Shop {
     }
 
     public void addToShoppingCart(Client client, Device gadget){
-        if(client.cart.contains(gadget)){
+        if(client.cart.cart.contains(gadget)){
             System.out.println("You have already added this item to your cart\n");
         } else {
-            client.cart.add(gadget);
+            client.cart.addToCart(gadget);
             System.out.println("the item has been added to the cart\n");
         }
     }
 
     public void showShoppingCart(Client client){
         System.out.println("Your shopping cart:\n");
-        if(client.cart.isEmpty()){
+        if(client.cart.cart.isEmpty()){
             System.out.println("empty\n");
         } else {
             int i = 1;
-            for(Device gadget : client.cart){
+            for(Device gadget : client.cart.cart){
                 System.out.println(i + ". ");
                 gadget.mainDescription();
                 i++;
@@ -85,20 +86,18 @@ public class Shop {
 
     public void removeFromCart(Client client){
         showShoppingCart(client);
-        Scanner scan = new Scanner(System.in);
         System.out.println("Enter the number of device you want to remove from shopping cart: ");
         int choice = scan.nextInt();
-        if(choice <= 0 || choice > client.cart.size()){
+        if(choice <= 0 || choice > client.cart.cart.size()){
             System.out.println("error\n");
         } else {
             System.out.println("You removed:");
-            client.cart.get(choice-1).mainDescription();
-            client.cart.remove(choice-1);
+            client.cart.cart.get(choice-1).mainDescription();
+            client.cart.removeFromCart(choice-1);
         }
     }
 
     public void buy(Client client, Device gadget){
-        Scanner scan = new Scanner(System.in);
         String address;
         System.out.print("enter your address: ");
         address = scan.nextLine();
@@ -120,35 +119,34 @@ public class Shop {
     }
 
     public void buy(Client client){
-        if(client.cart.isEmpty()){
+        if(client.cart.cart.isEmpty()){
             System.out.println("Your cart is empty");
         } else {
-            Scanner scan = new Scanner(System.in);
             String address;
             System.out.print("enter your address: ");
             address = scan.nextLine();
-            int price = CountTotalPrice(client);
+            float price = CountTotalPrice(client);
             float cashback = CountCashback(client);
             float weight = CountWeight(client);
-            Order order = new Order(address, price, cashback, weight, client.cart, client);
+            Order order = new Order(address, price, cashback, weight, client.cart.cart, client);
             orders.push(order);
             client.orders.add(order);
             System.out.println("Your order has been placed\n");
-            client.cart.clear();
+            client.cart.cart.clear();
         }
     }
 
     private float CountCashback(Client client){
         float cashback = 0.0f;
-        for(var device : client.cart){
+        for(var device : client.cart.cart){
             cashback += device.getCashback();
         }
         return  cashback;
     }
 
-    private int CountTotalPrice(Client client){
-        int totalPrice = 0;
-        for(var device : client.cart){
+    private float CountTotalPrice(Client client){
+        float totalPrice = 0;
+        for(var device : client.cart.cart){
             totalPrice += device.price;
         }
         return totalPrice;
@@ -156,7 +154,7 @@ public class Shop {
 
     private float CountWeight(Client client){
         float weight = 0.0f;
-        for(var device : client.cart){
+        for(var device : client.cart.cart){
             weight += device.weight;
         }
         return weight;
