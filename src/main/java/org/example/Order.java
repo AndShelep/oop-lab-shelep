@@ -11,7 +11,7 @@ public class Order {
     private Client client;
     protected ArrayList<Device> devices = new ArrayList<>();
 
-    protected Order(String address, int price, float cashback, float weight, List<Device> cart, Client client){
+    protected Order(String address, float price, float cashback, float weight, List<Device> cart, Client client){
         this.client = client;
         this.address = address;
         for(var device : cart){

@@ -65,25 +65,21 @@ public class HashTable {
             System.out.println("there is no this device");
         } else {
             Node current = buckets[i];
-            Node previous = buckets[i];
+            Node previous = null;
 
             while(current != null){
-                if(current.key.equals(key)) break;
+                if(current.key.equals(key)){
+                    if(previous == null){
+                        buckets[i] = current.next;
+                    } else {
+                        previous.next = current.next;
+                    }
+                    size--;  // Зменшуємо розмір хеш-таблиці
+                    System.out.println("Device removed successfully");
+                    return;
+                }
                 previous = current;
                 current = current.next;
-            }
-            if(current!=null){
-                if(current==buckets[i]){
-                    buckets[i] = current.next;
-                    current = null;
-                    size--;
-                } else {
-                    previous = current.next;
-                    current = null;
-                }
-                System.out.println("device removed successfully");
-            } else {
-                System.out.println("there is no this device");
             }
         }
     }
